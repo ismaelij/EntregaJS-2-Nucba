@@ -42,6 +42,7 @@ const arrayObjs = [
     }
 ]
 
+
 function pizzasFun(array){
     
     // Se imprime en consola las pizzas con id impar
@@ -86,27 +87,37 @@ const h4 = document.querySelector('#h4_html')
 const input = document.querySelector('#input_html')
 const button = document.querySelector('#button_html')
 const addForm = document.querySelector('#form_html')
+const lista_pizzas = document.querySelector('#Lista_de_pizzas')
 
+
+
+
+const createTask = (task) => {
+   return `<li><img src="./tareaNucba2.0/imgs/pizza${task.id}.jpg" class="img_pizza">${task.name}</li>`
+}
+
+const renderTask = (array) => {
+    lista_pizzas.innerHTML =  array.map(task => createTask(task)).join('')
+}
 
 function buscarPizza(id, array) {
     return array.find((elemento) => elemento.id == id)
 }
+
+
+let lista = []
 
 const addFunction = (evento) => {
     
     evento.preventDefault();
 
     let inputId = input.value.trim()
-
-    if(!buscarPizza(inputId, arrayObjs)) {
-        h2.textContent = 'No hay la pizza que buscas'
-        h4.textContent = ''
-    } else {
-        h2.textContent = buscarPizza(inputId, arrayObjs).nombre + " " + `$${buscarPizza(inputId, arrayObjs).precio}`;
-        h4.textContent = buscarPizza(inputId, arrayObjs).id
-    }
+    
+    lista = [...lista, {name:arrayObjs.find(pizza => pizza.id == inputId).nombre, id: arrayObjs.find(pizza => pizza.id == inputId).id - 1}]
+    console.log(lista)
 
     input.value = '';
+    renderTask(lista)
 }
 
 const init = () => {
